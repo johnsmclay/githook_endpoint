@@ -25,4 +25,12 @@ $authorized_users = array(
 // Enable for more verbose logging and client site logging
 $debug =FALSE;
 
+
+
+
+
+
+
+
+
 ?>
