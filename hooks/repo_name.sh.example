@@ -1,0 +1,21 @@
+#!/bin/bash
+
+REMOTE_HOST=''
+REMOTE_USER=''
+SSH_OPTIONS=''
+REMOTE_REPO_LOCATION='/srv/repofolder/'
+DEPLOY_BRANCH=stable
+
+RUN_COMMANDS="cd $REMOTE_REPO_LOCATION ; git reset --hard ; git checkout $DEPLOY_BRANCH ; git pull origin $DEPLOY_BRANCH"
+
+if [ $REMOTE_HOST == '' ]; then
+	RESULT=`$RUN_COMMANDS`
+else
+	ssh $SSH_OPTIONS $REMOTE_USER@$REMOTE_HOST "$RUN_COMMANDS"
+fi
+
+if [ $RETVAL -ne 0 ]; then 
+	echo "failed to deploy"; 
+else 
+	echo " stable was deployed if changes exist";
+fi
