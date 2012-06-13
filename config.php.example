@@ -6,7 +6,7 @@ $post_var_name = 'payload';
 $hooks_script_root = './hooks';
 
 // All information will be logged here
-$log_file = './githooks.log';
+$log_file = './log/githooks.log';
 
 // Configuration for users that will be allowed
 $authorized_users = array(
