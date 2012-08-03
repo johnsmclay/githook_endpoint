@@ -8,6 +8,9 @@ $hooks_script_root = './hooks';
 // All information will be logged here
 $log_file = './log/githooks.log';
 
+// Script to call
+$script_file = './script_runner.sh';
+
 // Configuration for users that will be allowed
 $authorized_users = array(
         array(
@@ -24,6 +27,3 @@ $authorized_users = array(
 
 // Enable for more verbose logging and client site logging
 $debug =FALSE;
-
-
-?>

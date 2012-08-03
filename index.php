@@ -135,16 +135,22 @@ log_message(print_r($payload,TRUE));
 
 $after_commit_id = $payload->after;
 $repo_name = $payload->repository->name;
+$commiting_user = escapeshellarg($payload->head_commit->author->name);
+$commit_message = escapeshellarg($payload->head_commit->message);
+$ref = $payload->ref;
+$branch = end(explode('/',$ref));
+
 
 log_message("After commit $after_commit_id on $repo_name");
-$script_file = $hooks_script_root.'/'.$repo_name.'.sh';
+#$script_file = $hooks_script_root.'/'.$repo_name.'.sh';
+$script_params = "-c '$after_commit_id' -r '$repo_name' -b '$branch' -u $commiting_user -m $commit_message";
 
 if(file_exists($script_file))
 {
-	log_message('Running '.$script_file);
-	log_message(shell_exec($script_file));
+	log_message('Running '.$script_file.' '.$script_params);
+	log_message(shell_exec($script_file.' '.$script_params));
 }else{
-	log_message("No hook found for $repo_name.");
+	log_message("Script runner not found, aborting.");
 }
 
 ?>
