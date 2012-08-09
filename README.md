@@ -5,7 +5,7 @@ Endpoint for post-receive requests from GitHub/GitLab which replaces githooks
 
 The security for this is fairly basic, there can be many "users" like a Github accont or repo.
 That "user" has a key that both identifies them and authorizes them to hit the endpoint.
-The key is put in the URL as a git parameter identified by the letter "k".
+The key is put in the URL as a get parameter identified by the letter "k".
 An example URL:
 https://localhost/githooks/?k=5aef35982fb2d356789d4502f6ede1072793222d
 
