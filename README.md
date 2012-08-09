@@ -13,10 +13,10 @@ Also, each user has a list of ip addresses that they can access the endpoint fro
 The IP address whitelist combined with SSL use to keep sniffers from seeing the key in the URL should be good enough security for this type of application.  If you have suggestions for better security let me know.
 
 When a user successfully connects and sends the post-recieve data the PHP calls a bash script called "script_runner.sh" and includes some variables like:
-$REPOSITORY -- the name of the repo the recieve was for
-$BRANCH -- the name of the branch the commit was for
-$USER -- the full name of the user that committed
-$MESSAGE -- the commit message
-$COMMITID -- the ID of the commit so you can checkout that specific revision if needed
+* $REPOSITORY -- the name of the repo the recieve was for
+* $BRANCH -- the name of the branch the commit was for
+* $USER -- the full name of the user that committed
+* $MESSAGE -- the commit message
+* $COMMITID -- the ID of the commit so you can checkout that specific revision if needed
 
 Within "script_runner.sh" you have access to all these variables, so you can either do something like call another script located in hooks/$REPOSITORY/$BRANCH.sh or do if statements looking for commits to specific repo/branches or whatever you want.
