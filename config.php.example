@@ -1,6 +1,13 @@
 <?php
+
 // The POST variable in which Github/Gitlab stores the JSON data
 $post_var_name = 'payload';
+
+
+// The endpoint type can be 'default' or 'gitlab' 
+// 'gitlab' makes the script use $HTTP_RAW_POST_DATA instead of $_POST[$post_var_name]
+$endpoint_type = 'default';
+
 
 // The folder that contains the scripts that will be run
 $hooks_script_root = './hooks';
