@@ -1,6 +1,13 @@
 <?php
+
 // The POST variable in which Github/Gitlab stores the JSON data
 $post_var_name = 'payload';
+
+
+// The gitlab workaround uses $HTTP_RAW_POST_DATA instead of $_POST[$post_var_name]
+// Set  this to true to use
+$gitlab_workaround = false;
+
 
 // The folder that contains the scripts that will be run
 $hooks_script_root = './hooks';
@@ -18,7 +25,7 @@ $authorized_users = array(
                 'key' => '5aef35982fb2d34e9d9d4502f6ede1072793222d',
                 'ip_addresses' => array('10.9.8.7','172.6.5.4'),
         ),
-	array(
+	    array(
                 'name' => 'github-username',
                 'key' => '5aef35982fb2d356789d4502f6ede1072793222d',
                 'ip_addresses' => array('*'),

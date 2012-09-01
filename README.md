@@ -33,3 +33,13 @@ When a user successfully connects and sends the post-recieve data the PHP calls 
 * $COMMITID -- the ID of the commit so you can checkout that specific revision if needed
 
 Within "script_runner.sh" you have access to all these variables, so you can either do something like call another script located in hooks/$REPOSITORY/$BRANCH.sh or do if statements looking for commits to specific repo/branches or whatever you want.
+
+Notice to Gitlab Users:
+-----------------------
+
+Gitlab uses $HTTP_RAW_POST_DATA instead of $_POST in its Requests. 
+This is listed as a issue here: 
+https://github.com/gitlabhq/gitlabhq/issues/660
+
+Until this issue is fixed there is the config var $gitlab_workaround which switches the behaivor.
+Look at the code to understand. Thanks.
