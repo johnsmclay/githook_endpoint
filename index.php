@@ -101,7 +101,7 @@ if(!isset($_GET['k']))
 	exit(0);
 }
 
-$authorized = FALSE;
+$authorized = false;
 foreach($authorized_users as $user)
 {
 	if($user['key'] == $_GET['k'])
@@ -112,24 +112,33 @@ foreach($authorized_users as $user)
 			if($allowed_address == '*' || $allowed_address == $_SERVER['REMOTE_ADDR'])
 			{
 				log_message("Connection accepted from ".$user['name'].' on '.$_SERVER['REMOTE_ADDR']);
-				$authorized = TRUE;
+				$authorized = true;
 			}
 		}
 	}
 }
 
-if(!isset($_POST[$post_var_name]))
+if($authorized !== true)
+{
+    log_message("Access denied. Stopping");
+    die();
+}
+
+if(!isset($_POST[$post_var_name]) || empty($HTTP_RAW_POST_DATA))
 {
 	log_message("No data submitted.");
 	exit(0);
 }
 
-if(!$authorized)
-{
-	
+
+
+if ($gitlab_workaround === true) {
+	$json_payload = $HTTP_RAW_POST_DATA;
+}
+else {	
+    $json_payload = $_POST[$post_var_name];
 }
 
-$json_payload = $_POST[$post_var_name];
 $payload = json_decode($json_payload);
 log_message("Data Submitted:");
 log_message(print_r($payload,TRUE));
@@ -151,7 +160,9 @@ if(file_exists($script_file))
 	log_message('Running '.$script_file.' '.$script_params);
 	log_message(shell_exec($script_file.' '.$script_params));
 }else{
-	log_message("Script runner not found, aborting.");
+	log_message($script_file . " not found, aborting.");
+
+
 }
 
 ?>
