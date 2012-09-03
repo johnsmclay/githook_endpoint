@@ -1,5 +1,5 @@
 <?php
-// The POST variable in which Github/Gitlab stores the JSON data
+// The POST variable in which Github stores the JSON data
 $post_var_name = 'payload';
 
 // The folder that contains the scripts that will be run
