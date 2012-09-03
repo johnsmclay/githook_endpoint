@@ -117,15 +117,23 @@ foreach($authorized_users as $user)
 	}
 }
 
-if(!isset($_POST[$post_var_name]))
+if(!isset($_POST[$post_var_name]) || empty($HTTP_RAW_POST_DATA))
 {
 	log_message("No data submitted.");
 	exit(0);
 }
 
+if (isset($_POST[$post_var_name])) {
+    $json_payload = $_POST[$post_var_name];
+}
+else {
+    $json_payload = $HTTP_RAW_POST_DATA;
+}
+
 if(!$authorized)
 {
-	
+    log_message("Access denied. Stopping");	
+    die();
 }
 
 $json_payload = $_POST[$post_var_name];
@@ -150,7 +158,7 @@ if(file_exists($script_file))
 	log_message('Running '.$script_file.' '.$script_params);
 	log_message(shell_exec($script_file.' '.$script_params));
 }else{
-	log_message("Script runner not found, aborting.");
+	log_message($script_file . " not found, aborting.");
 }
 
 ?>
