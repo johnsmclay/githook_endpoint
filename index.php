@@ -92,6 +92,7 @@ if($debug)
 {
 	log_message("_POST obj: ".print_r($_POST,TRUE));
 	log_message("_GET obj: ".print_r($_GET,TRUE));
+	log_message("HTTP_RAW_POST_DATA var: ". print_r($HTTP_RAW_POST_DATA, true);
 }
 
 if(!isset($_GET['k']))
