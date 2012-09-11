@@ -79,8 +79,6 @@ $after_commit_id = $payload->after;
 $repo_name = $payload->repository->name;
 if($payload_type == 'gitlab')
 {
-	log_message(print_r($payload->total_commits_count,TRUE));
-	log_message(print_r($payload->commits[$payload->total_commits_count - 1],TRUE));
 	$commiting_user = escapeshellarg($payload->commits[$payload->total_commits_count - 1]->author->name);
 	$commit_message = escapeshellarg($payload->commits[$payload->total_commits_count - 1]->message);
 }else if($payload_type == 'github'){
