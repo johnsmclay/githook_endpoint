@@ -118,7 +118,7 @@ foreach($authorized_users as $user)
 	}
 }
 
-if(!isset($_POST[$post_var_name]) || empty($HTTP_RAW_POST_DATA))
+if(!isset($_POST[$post_var_name]) && empty($HTTP_RAW_POST_DATA))
 {
 	log_message("No data submitted.");
 	exit(0);
