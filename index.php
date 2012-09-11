@@ -2,74 +2,6 @@
 
 require_once('./config.php');
 
-/*
-#####################
-## EXAMPLE PAYLOAD ##
-#####################
-stdClass Object
-(
-    [before] => 5aef35982fb2d34e9d9d4502f6ede1072793222d
-    [user_id] => 4
-    [user_name] => John Smith
-    [repository] => stdClass Object
-        (
-            [url] => http://github.com/defunkt/github
-            [name] => github
-            [description] => You're lookin' at it.
-            [watchers] => 5
-            [forks] => 2
-            [private] => 1
-            [owner] => stdClass Object
-                (
-                    [email] => chris@ozmm.org
-                    [name] => defunkt
-                )
-
-        )
-
-    [commits] => Array
-        (
-            [0] => stdClass Object
-                (
-                    [id] => 41a212ee83ca127e3c8cf465891ab7216a705f59
-                    [url] => http://github.com/defunkt/github/commit/41a212ee83ca127e3c8cf465891ab7216a705f59
-                    [author] => stdClass Object
-                        (
-                            [email] => chris@ozmm.org
-                            [name] => Chris Wanstrath
-                        )
-
-                    [message] => okay i give in
-                    [timestamp] => 2008-02-15T14:57:17-08:00
-                    [added] => Array
-                        (
-                            [0] => filepath.rb
-                        )
-
-                )
-
-            [1] => stdClass Object
-                (
-                    [id] => de8251ff97ee194a289832576287d6f8ad74e3d0
-                    [url] => http://github.com/defunkt/github/commit/de8251ff97ee194a289832576287d6f8ad74e3d0
-                    [author] => stdClass Object
-                        (
-                            [email] => chris@ozmm.org
-                            [name] => Chris Wanstrath
-                        )
-
-                    [message] => update pricing a tad
-                    [timestamp] => 2008-02-15T14:36:34-08:00
-                )
-
-        )
-
-    [after] => de8251ff97ee194a289832576287d6f8ad74e3d0
-    [ref] => refs/heads/master
-)
-
-*/
-
 $request_identifier = rand(1000000,9999999);
 function log_message($message='')
 {
@@ -137,7 +69,6 @@ if(!$authorized)
     die();
 }
 
-$json_payload = $_POST[$post_var_name];
 $payload = json_decode($json_payload);
 log_message("Data Submitted:");
 log_message(print_r($payload,TRUE));
