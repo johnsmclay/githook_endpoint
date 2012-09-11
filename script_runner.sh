@@ -26,4 +26,4 @@ echo "COMMITID=$COMMITID" >> $LOG_FILE
 # ==============================================
 
 echo "Running ./hooks/$$REPOSITORY.sh"
-./hooks/$$REPOSITORY.sh
+./hooks/$$REPOSITORY.sh -c "$COMMITID" -b "$BRANCH" -u "$USER" -m "$MESSAGE"
