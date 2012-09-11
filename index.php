@@ -56,11 +56,13 @@ if(!isset($_POST[$post_var_name]) && empty($HTTP_RAW_POST_DATA))
 	exit(0);
 }
 
+$payload_type = 'github';
 if (isset($_POST[$post_var_name])) {
     $json_payload = $_POST[$post_var_name];
 }
 else {
     $json_payload = $HTTP_RAW_POST_DATA;
+    $payload_type = 'gitlab';
 }
 
 if(!$authorized)
@@ -75,8 +77,14 @@ log_message(print_r($payload,TRUE));
 
 $after_commit_id = $payload->after;
 $repo_name = $payload->repository->name;
-$commiting_user = escapeshellarg($payload->head_commit->author->name);
-$commit_message = escapeshellarg($payload->head_commit->message);
+if($payload_type == 'gitlab')
+{
+	$commiting_user = escapeshellarg(array_keys($payload->commits,max($payload->commits))->author->name);
+	$commit_message = escapeshellarg(array_keys($payload->commits,max($payload->commits))->message);
+}else if($payload_type == 'github'){
+	$commiting_user = escapeshellarg($payload->head_commit->author->name);
+	$commit_message = escapeshellarg($payload->head_commit->message);
+}
 $ref = $payload->ref;
 $branch = end(explode('/',$ref));
 
