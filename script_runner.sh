@@ -25,4 +25,4 @@ echo "COMMITID=$COMMITID" >> $LOG_FILE
 # Do your worst below here...
 # ==============================================
 
-
+./hooks/$$REPOSITORY.sh
