@@ -33,6 +33,14 @@ if(!isset($_GET['k']))
 	exit(0);
 }
 
+if(!isset($_GET['t']))
+{
+        log_message('No type specified');
+	exit(0);
+}
+$payload_type = $_GET['t'];
+
+
 $authorized = FALSE;
 foreach($authorized_users as $user)
 {
@@ -56,13 +64,19 @@ if(!isset($_POST[$post_var_name]) && empty($HTTP_RAW_POST_DATA))
 	exit(0);
 }
 
-$payload_type = 'github';
-if (isset($_POST[$post_var_name])) {
+log_message("Payload Type: $payload_type");
+if ($payload_type == 'github') {
+    $json_payload = $_POST[$post_var_name];
+}
+else if($payload_type == 'gitlab') {
+    $json_payload = $HTTP_RAW_POST_DATA;
+}
+else if($payload_type == 'bitbucket') {
     $json_payload = $_POST[$post_var_name];
 }
 else {
-    $json_payload = $HTTP_RAW_POST_DATA;
-    $payload_type = 'gitlab';
+    log_message("Payload Type: $payload_type not supported");
+    die();
 }
 
 if(!$authorized)
@@ -81,12 +95,21 @@ if($payload_type == 'gitlab')
 {
 	$commiting_user = escapeshellarg($payload->commits[$payload->total_commits_count - 1]->author->name);
 	$commit_message = escapeshellarg($payload->commits[$payload->total_commits_count - 1]->message);
-}else if($payload_type == 'github'){
+	$ref = $payload->ref;
+	$branch = end(explode('/',$ref));
+}
+else if($payload_type == 'github'){
 	$commiting_user = escapeshellarg($payload->head_commit->author->name);
 	$commit_message = escapeshellarg($payload->head_commit->message);
+	$ref = $payload->ref;
+	$branch = end(explode('/',$ref));
 }
-$ref = $payload->ref;
-$branch = end(explode('/',$ref));
+else if($payload_type == 'bitbucket'){
+	$commiting_user = escapeshellarg($payload->commits[$payload->total_commits_count - 1]->author);
+	$commit_message = escapeshellarg($payload->commits[$payload->total_commits_count - 1]->message);
+	$ref = escapeshellarg($payload->commits[$payload->total_commits_count - 1]->raw_node);
+	$branch = escapeshellarg($payload->commits[$payload->total_commits_count - 1]->branch);
+}
 
 
 log_message("After commit $after_commit_id on $repo_name");
