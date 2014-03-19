@@ -33,3 +33,10 @@ When a user successfully connects and sends the post-recieve data the PHP calls 
 * $COMMITID -- the ID of the commit so you can checkout that specific revision if needed
 
 Within "script_runner.sh" you have access to all these variables, so you can either do something like call another script located in hooks/$REPOSITORY/$BRANCH.sh or do if statements looking for commits to specific repo/branches or whatever you want.
+
+NOTE: If you use php5-fpm to run it you will need a few packages to use json_decode() and you need to allow the *.sh files to execute:
+```bash
+sudo apt-get install php5-json
+chmod +x ./script_runner.sh
+chmod +x ./hooks/<repo name>.sh
+```
