@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set("UTC");
 
 require_once('./config.php');
 
@@ -90,25 +91,27 @@ log_message("Data Submitted:");
 log_message(print_r($payload,TRUE));
 
 $after_commit_id = $payload->after;
-$repo_name = $payload->repository->name;
 if($payload_type == 'gitlab')
 {
 	$commiting_user = escapeshellarg($payload->commits[$payload->total_commits_count - 1]->author->name);
 	$commit_message = escapeshellarg($payload->commits[$payload->total_commits_count - 1]->message);
 	$ref = $payload->ref;
 	$branch = end(explode('/',$ref));
+	$repo_name = $payload->repository->name;
 }
 else if($payload_type == 'github'){
 	$commiting_user = escapeshellarg($payload->head_commit->author->name);
 	$commit_message = escapeshellarg($payload->head_commit->message);
 	$ref = $payload->ref;
 	$branch = end(explode('/',$ref));
+	$repo_name = $payload->repository->name;
 }
 else if($payload_type == 'bitbucket'){
-	$commiting_user = escapeshellarg($payload->commits[$payload->total_commits_count - 1]->author);
-	$commit_message = escapeshellarg($payload->commits[$payload->total_commits_count - 1]->message);
-	$ref = escapeshellarg($payload->commits[$payload->total_commits_count - 1]->raw_node);
-	$branch = escapeshellarg($payload->commits[$payload->total_commits_count - 1]->branch);
+	$repo_name = $payload->repository->name;
+	$commiting_user = escapeshellarg($payload->commits[count($payload->commits) - 1]->author);
+	$commit_message = escapeshellarg($payload->commits[count($payload->commits) - 1]->message);
+	$ref = escapeshellarg($payload->commits[count($payload->commits) - 1]->raw_node);
+	$branch = escapeshellarg($payload->commits[count($payload->commits) - 1]->branch);
 }
 
 
