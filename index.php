@@ -98,6 +98,7 @@ if($payload_type == 'gitlab')
 	$ref = $payload->ref;
 	$branch = end(explode('/',$ref));
 	$repo_name = $payload->repository->name;
+	$after_commit_id = $payload->after;
 }
 else if($payload_type == 'github'){
 	$commiting_user = escapeshellarg($payload->head_commit->author->name);
@@ -105,6 +106,7 @@ else if($payload_type == 'github'){
 	$ref = $payload->ref;
 	$branch = end(explode('/',$ref));
 	$repo_name = $payload->repository->name;
+	$after_commit_id = $payload->after;
 }
 else if($payload_type == 'bitbucket'){
 	$repo_name = $payload->repository->name;
@@ -112,12 +114,13 @@ else if($payload_type == 'bitbucket'){
 	$commit_message = escapeshellarg($payload->commits[count($payload->commits) - 1]->message);
 	$ref = escapeshellarg($payload->commits[count($payload->commits) - 1]->raw_node);
 	$branch = escapeshellarg($payload->commits[count($payload->commits) - 1]->branch);
+	$after_commit_id = $ref;
 }
 
 
-log_message("After commit $after_commit_id on $repo_name");
+log_message("After commit $after_commit_id on repo $repo_name, branch $branch ");
 #$script_file = $hooks_script_root.'/'.$repo_name.'.sh';
-$script_params = "-c '$after_commit_id' -r '$repo_name' -b '$branch' -u $commiting_user -m $commit_message";
+$script_params = "-c '$after_commit_id' -r '$repo_name' -b $branch -u $commiting_user -m $commit_message";
 
 if(file_exists($script_file))
 {
