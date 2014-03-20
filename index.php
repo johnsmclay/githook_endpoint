@@ -90,7 +90,6 @@ $payload = json_decode($json_payload);
 log_message("Data Submitted:");
 log_message(print_r($payload,TRUE));
 
-$after_commit_id = $payload->after;
 if($payload_type == 'gitlab')
 {
 	$commiting_user = escapeshellarg($payload->commits[$payload->total_commits_count - 1]->author->name);
