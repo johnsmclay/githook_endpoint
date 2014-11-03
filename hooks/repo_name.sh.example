@@ -13,9 +13,9 @@ if [ $REMOTE_HOST == '' ]; then
 else
 	ssh $SSH_OPTIONS $REMOTE_USER@$REMOTE_HOST "$RUN_COMMANDS"
 fi
-
+RETVAL=$?
 if [ $RETVAL -ne 0 ]; then 
 	echo "failed to deploy"; 
 else 
-	echo " stable was deployed if changes exist";
+	echo " ${DEPLOY_BRANCH} was deployed if changes exist";
 fi
