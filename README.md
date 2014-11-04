@@ -1,7 +1,7 @@
 githook_endpoint
 ================
 
-Endpoint for post-receive requests from GitHub/GitLab which replaces githooks
+Endpoint for post-receive requests from GitHub/GitLab/BitBucket
 
 The security for this is fairly basic, there can be many "users" like a Github accont or repo.
 That "user" has a key that both identifies them and authorizes them to hit the endpoint.
