@@ -2,6 +2,9 @@
 // The POST variable in which Github stores the JSON data
 $post_var_name = 'payload';
 
+// Github uses raw instead of post_var?
+$github_uses_post_var = False;
+
 // The folder that contains the scripts that will be run
 $hooks_script_root = './hooks';
 
