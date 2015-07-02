@@ -67,7 +67,11 @@ if(!isset($_POST[$post_var_name]) && empty($HTTP_RAW_POST_DATA))
 
 log_message("Payload Type: $payload_type");
 if ($payload_type == 'github') {
-    $json_payload = $_POST[$post_var_name];
+    if ($github_uses_post_var) {
+        $json_payload = $_POST[$post_var_name];
+    } else {
+        $json_payload = $HTTP_RAW_POST_DATA;
+    }
 }
 else if($payload_type == 'gitlab') {
     $json_payload = $HTTP_RAW_POST_DATA;
